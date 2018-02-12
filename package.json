@@ -1,0 +1,38 @@
+{
+  "name": "canvas-syncing-assignment-part4",
+  "version": "1.0.0",
+  "description": "Final countdown, this is it",
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "node ./src/server.js",
+    "pretest": "eslint ./src --fix",
+    "test": "echo \"Tests complete\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KMTaylor023/canvas-syncing-assignment-part4.git"
+  },
+  "keywords": [
+    "Wow",
+    "woW",
+    "episode4-a-new-yote\u001b[1;6D\u001b[1;6D\u001b[1;6D\u001b[1;6D\u001b[1;6D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[Cyeet-or-be-yote",
+    "episode4-a-new-yote",
+    "synchronized",
+    "socketio",
+    "wow-again"
+  ],
+  "author": "Keegan Taylor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KMTaylor023/canvas-syncing-assignment-part4/issues"
+  },
+  "homepage": "https://github.com/KMTaylor023/canvas-syncing-assignment-part4#readme",
+    "dependencies": {
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  }
+}

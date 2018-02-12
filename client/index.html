@@ -2,12 +2,112 @@
 <html lang="en">
 <head>
     <script src="https://npmcdn.com/babel-core@5.8.38/browser.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/babel" >
         "use strict";
-    
+
+
+        const myImage = {};
+        const myData = {};
+
+        var a = false;
+
+        var bfr;
+        var bfrctx;
+
+
+        const setupImage = (data, sock, ctx) =>{
+          const socket = sock;
+          let image = {};
+          image.image = new Image();
+          
+          image.x = data.x;
+          image.y = data.y;
+          
+          image.image.onload = () =>{
+            drawImage(image,ctx);
+          };
+          
+          image.image.src = data.imgData;
+        }
+        const onDraw = (sock, ctx) =>{
+          const socket = sock;
+          
+          socket.on('draw', (data) =>{
+            setupImage(data, socket, ctx);
+            
+          });
+        };
+
+        const onBump = (sock) =>{
+          const socket = sock;
+          socket.on('bump', () => ready(socket));
+        };
+
+        const sendImage = (sock) =>{
+          const socket = sock;
+          socket.emit('draw',myData);
+        };
+
+        const drawImage = (image, ctx) =>{
+          ctx.save();
+          
+          ctx.globalCompositeOperation = "source-over";
+          ctx.drawImage(image.image, image.x, image.y, 100,100);
+          
+          ctx.restore();
+        };
+
+        const ready = (sock) =>{
+          if(a){
+            sendImage(sock);
+          }
+        }
+        
+        const init = () =>{
+          const canvas = document.querySelector("canvas");
+          canvas.width = 500;
+          canvas.height = 500;
+          canvas.style.border = "1px solid blue";
+          const ctx = canvas.getContext('2d');
+          
+          myData.x = Math.floor((Math.random() * (canvas.width - 100)))
+          myData.y = Math.floor((Math.random() * (canvas.height - 100)));
+          
+          
+          bfr = document.createElement("canvas");
+          bfr.height = 100;
+          bfr.width = 100;
+          bfrctx = bfr.getContext("2d");
+          
+          bfrctx.save()
+          let r =(Math.floor(Math.random() * 256));
+          let g =(Math.floor(Math.random() * 256));
+          let b =(Math.floor(Math.random() * 256));
+          bfrctx.fillStyle = `rgb(${r},${g},${b})`;
+          bfrctx.fillRect(0,0,100,100);
+          bfrctx.restore();
+          
+          myData.imgData = bfr.toDataURL();
+          
+          const socket = io.connect();
+          
+          socket.on("connect", () =>{
+            a = true;
+            ready(socket,ctx);
+            setupImage(myData, socket, ctx);
+          });
+          
+          
+        
+          onDraw(socket,ctx);
+          onBump(socket);
+        };
+
+        window.onload = init; 
     </script>
 </head>
 <body>
-
+<canvas></canvas>
 </body>
 </html>
